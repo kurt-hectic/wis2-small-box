@@ -1,0 +1,16 @@
+{
+    "name": "NAMITAMBO",
+    "location": 
+	{
+		"latitude": -15.84052,
+		"longitude": 35.27428,
+		"elevation": 806
+	},
+    "wigosId": 
+	{
+		"wid_series": "0", 
+		"wid_issuer": "454",
+		"wid_issue_number": "2",
+		"wid_local": "AWSNAMITAMBO"
+	}
+}

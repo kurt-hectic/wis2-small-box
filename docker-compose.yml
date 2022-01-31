@@ -1,0 +1,65 @@
+version: "3.2"
+services:
+  rabbitmq:
+    image: rabbitmq:3-management-alpine
+    container_name: 'rabbitmq'
+    ports:
+        - 5672:5672
+        - 15672:15672
+    volumes:
+        - ./conf/rabbitmq/data/:/var/lib/rabbitmq/
+        - ./conf/rabbitmq/log/:/var/log/rabbitmq
+        
+    environment:
+        - RABBITMQ_DEFAULT_USER=guest
+        - RABBITMQ_DEFAULT_PASS=guest
+
+  redis:
+    image: redislabs/rejson:latest
+    ports:
+        - 6379:6379
+    
+
+  converter:
+    build:
+      context: ./converter
+      dockerfile: Dockerfile
+      
+    environment:
+        - BROKER_URL=amqp://guest:guest@rabbitmq:5672/%2f
+        - EXCHANGE_NAME=incoming
+        - PUB_EXCHANGE_NAME=publication
+        - MQ_HOST_PORT=rabbitmq:5672
+        
+    
+
+    depends_on:
+        - "launchpad"
+
+  publisher:    
+    build:
+      context: ./publisher
+      dockerfile: Dockerfile
+      
+    environment:
+       - BROKER_URL=amqp://guest:guest@rabbitmq:5672/%2f
+       - PUB_EXCHANGE_NAME=publication
+       
+    depends_on: 
+       - "launchpad"
+  #nginx
+  
+  launchpad:
+    build:
+       context: ./launchpad
+       dockerfile: Dockerfile
+
+
+    environment:
+       STATIONS: "0-454-2-AWSNAMITAMBO,0-454-2-AWSCHINGALE,0-454-2-AWSMTOSABENGA,0-454-2-AWSKASIYA"
+       REDIS_HOST_PORT: "redis:6379"
+       
+    depends_on:
+      - "redis"
+      
+      
