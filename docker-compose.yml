@@ -47,8 +47,8 @@ services:
        - BROKER_URL=amqp://internal:rt9w3d2DFwfVJQJ@rabbitmq:5672/internal
        - PUBLIC_BROKER_URL=amqp://internal:rt9w3d2DFwfVJQJ@rabbitmq:5672/%2f
        - PUB_EXCHANGE_NAME=publication
-       - MINIO_USER=minio
-       - MINIO_PASS=minio123
+       - MINIO_ROOT_USER=minio
+       - MINIO_ROOT_PASSWORD=minio123
        - TOPIC=mw.blantyre_chileka.observation.surface.land.automatic.tropics.0-90w
        - MAX_SIZE=4000
        - PUBLIC_URL=http://127.0.0.1:9000/public
