@@ -44,10 +44,40 @@ services:
     environment:
        - BROKER_URL=amqp://guest:guest@rabbitmq:5672/%2f
        - PUB_EXCHANGE_NAME=publication
-       
+       - MINIO_USER=minio
+       - MINIO_PASS=minio123
+       - TOPIC=mw.blantyre_chileka.observation.surface.land.automatic.tropics.0-90w
+       - MAX_SIZE=4000
+       - PUBLIC_URL=http://127.0.0.1:9000/public
+    
     depends_on: 
        - "launchpad"
   #nginx
+  
+  minio:
+    image: minio/minio
+    ports:
+       - "9000:9000"
+       - "9001:9001"
+    volumes:
+       - ./data/minio:/data
+    environment:
+       - "MINIO_ACCESS_KEY=minio"
+       - "MINIO_SECRET_KEY=minio123"
+    command: server /data --console-address ":9001"
+
+  createbuckets:
+    image: minio/mc
+    depends_on:
+       - minio
+    entrypoint: >
+       /bin/sh -c "
+       /usr/bin/mc alias set myminio http://minio:9000 minio minio123;
+       /usr/bin/mc mb myminio/public;
+       /usr/bin/mc policy set download myminio/public;
+       exit 0;
+       "
+  
   
   launchpad:
     build:

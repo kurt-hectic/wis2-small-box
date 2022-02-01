@@ -73,7 +73,7 @@ def publish_for_publication(wigos_id,bufr):
     
     channel.exchange_declare(exchange=exchange_pub_name, exchange_type='fanout')
 
-    key = f"{wigos_id}/{bufr['_meta']['data_date']}"
+    key = f"{wigos_id}_{bufr['_meta']['data_date']}"
 
     logging.debug(f"publishing to exchange with {key}")
     channel.basic_publish(exchange=exchange_pub_name,routing_key=key,body=bufr["bufr4"])      
