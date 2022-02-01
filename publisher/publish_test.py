@@ -10,7 +10,7 @@ file = r"../converter/test/Namitambo_SYNOP.csv" #
 
 def main():
 
-    params = pika.URLParameters("amqp://internal:rt9w3d2DFwfVJQJ@127.0.0.1:5672/internal")
+    params = pika.URLParameters("amqp://internal:rt9w3d2DFwfVJQJ@box.wis.wmo.int:5672/internal")
     
     connection = pika.BlockingConnection(params)
     channel = connection.channel()
