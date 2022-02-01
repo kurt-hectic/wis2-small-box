@@ -112,6 +112,8 @@ def main():
 
     logging.info("setting up MQP consumer")
 
+    time.sleep(15) # wait 15 seconds for broker to be up
+
     # connect to the broker
     params = pika.URLParameters(url)
     

@@ -131,6 +131,7 @@ def main():
 
     logging.info("setting up minIO client")
     
+    time.sleep(15) # wait 15 seconds for broker to be up
  
     logging.info("setting up MQP consumer")
 

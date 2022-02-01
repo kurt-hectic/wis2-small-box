@@ -8,7 +8,7 @@ services:
         - 15672:15672
     volumes:
         - ./conf/rabbitmq/data/:/var/lib/rabbitmq/
-        - ./conf/rabbitmq/log/:/var/log/rabbitmq
+        #- ./conf/rabbitmq/log/:/var/log/rabbitmq
         - ./conf/rabbitmq.conf:/etc/rabbitmq/rabbitmq.conf
         - ./conf/definitions.json:/etc/rabbitmq_definitions.json
         
