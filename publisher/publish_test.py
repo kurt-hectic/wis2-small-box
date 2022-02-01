@@ -10,12 +10,12 @@ file = r"../converter/test/Namitambo_SYNOP.csv" #
 
 def main():
 
-    params = pika.URLParameters("amqp://localhost:5672/%2f")
+    params = pika.URLParameters("amqp://internal:rt9w3d2DFwfVJQJ@127.0.0.1:5672/internal")
     
     connection = pika.BlockingConnection(params)
     channel = connection.channel()
     
-    channel.exchange_declare(exchange='incoming', exchange_type='fanout')
+    #channel.exchange_declare(exchange='incoming', exchange_type='fanout')
 
     
     with open(file,encoding="utf-8") as f:

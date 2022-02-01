@@ -16,6 +16,7 @@ logging.getLogger("urllib3").setLevel(logging.WARNING)
 
 
 url = os.environ.get('BROKER_URL', 'amqp://guest:guest@localhost:5672/%2f') # the location and username password of the broker
+url_public = os.environ.get("PUBLIC_BROKER_URL")
 minio_user = os.environ.get("MINIO_USER")
 minio_pass = os.environ.get("MINIO_PASS")
 public_topic = os.environ.get('TOPIC')
@@ -70,7 +71,7 @@ def publish_message(filename,body):
     
     logging.info("establishing connection to brokwer")
     
-    params = pika.URLParameters(url)
+    params = pika.URLParameters(url_public)
     outgoing_connection = pika.BlockingConnection(params) # FIXME: this is not efficient. opens a new connection for each message
     channel = outgoing_connection.channel()
     
@@ -110,7 +111,7 @@ def setup_incoming(connection):
     
     channel = connection.channel()
 
-    channel.exchange_declare(exchange=exchange_name,exchange_type='fanout')
+    #channel.exchange_declare(exchange=exchange_name,exchange_type='fanout')
     
     result = channel.queue_declare(queue='', exclusive=True)
     queue_name = result.method.queue

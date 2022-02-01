@@ -1,4 +1,4 @@
-FROM wmo-im/csv2bufr:dev
+FROM wmoim/csv2bufr:dev
 
 WORKDIR /app
 

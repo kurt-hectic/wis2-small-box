@@ -71,7 +71,7 @@ def publish_for_publication(wigos_id,bufr):
     outgoing_connection = pika.BlockingConnection(params) # FIXME: this is not efficient. opens a new connection for each message
     channel = outgoing_connection.channel()
     
-    channel.exchange_declare(exchange=exchange_pub_name, exchange_type='fanout')
+    #channel.exchange_declare(exchange=exchange_pub_name, exchange_type='fanout')
 
     key = f"{wigos_id}_{bufr['_meta']['data_date']}"
 
@@ -89,7 +89,7 @@ def setup_incoming(connection):
     
     channel = connection.channel()
 
-    channel.exchange_declare(exchange=exchange_name,exchange_type='fanout')
+    #channel.exchange_declare(exchange=exchange_name,exchange_type='fanout')
     
     result = channel.queue_declare(queue='', exclusive=True)
     queue_name = result.method.queue
@@ -105,14 +105,7 @@ def setup_incoming(connection):
 
     return channel
     
-def setup_outgoing(connection):
-    """setup the connection to the outgoing exchange"""
-    
-    
-    channel = connection.channel()
-    channel.exchange_declare(exchange=exchange_pub_name, exchange_type='fanout')
-    
-    return channel
+
 
     
 def main():
