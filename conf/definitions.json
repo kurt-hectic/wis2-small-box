@@ -48,7 +48,7 @@
 			"user": "public",
 			"vhost": "/",
 			"configure": ".*",
-			"write": "",
+			"write": ".*",
 			"read": ".*"
 		},
 		{
