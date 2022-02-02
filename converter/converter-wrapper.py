@@ -31,10 +31,14 @@ def callback(ch, method, properties, body):
     logging.info("Received message with topic: " + wigos_id )
     logging.info(f"callback {properties}, {wigos_id}")
     
-    bufr = process_csv(wigos_id,csv_string)
+    try:
+        bufr = process_csv(wigos_id,csv_string)
     
-    if bufr:
-        publish_for_publication(wigos_id,bufr)
+        if bufr:
+            publish_for_publication(wigos_id,bufr)
+            
+    except Exception as e:
+        logging.error(f"error during processing of {wigos_id}, {e}")
     
 
 def process_csv(wigos_id,data): 
